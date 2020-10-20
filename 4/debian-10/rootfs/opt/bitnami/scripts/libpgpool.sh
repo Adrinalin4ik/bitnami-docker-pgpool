@@ -82,6 +82,18 @@ export PGPOOL_TLS_KEY_FILE="${PGPOOL_TLS_KEY_FILE:-}"
 export PGPOOL_TLS_CA_FILE="${PGPOOL_TLS_CA_FILE:-}"
 export PGPOOL_TLS_PREFER_SERVER_CIPHERS="${PGPOOL_TLS_PREFER_SERVER_CIPHERS:-yes}"
 
+# Watchdog
+
+export PGPOOL_WD_USE_WATCHDOG="${PGPOOL_WD_USE_WATCHDOG:-no}"
+export PGPOOL_WD_TRUSTED_SERVERS="${PGPOOL_WD_TRUSTED_SERVERS:-}"
+export PGPOOL_WD_HOSTNAME="${PGPOOL_WD_HOSTNAME:-}"
+export PGPOOL_WD_PORT="${PGPOOL_WD_PORT:-9000}"
+export PGPOOL_WD_PRIORITY="${PGPOOL_WD_PRIORITY:-1}"
+export PGPOOL_WD_DELEGATE_IP="${PGPOOL_WD_DELEGATE_IP:-}"
+export PGPOOL_WD_INTERVAL="${PGPOOL_WD_INTERVAL:-10}"
+export PGPOOL_WD_HEARTBEAT_KEEPALIVE="${PGPOOL_WD_HEARTBEAT_KEEPALIVE:-2}"
+export PGPOOL_WD_HEARTBEAT_DEADTIME="${PGPOOL_WD_HEARTBEAT_KEEPALIVE:-30}"
+
 EOF
     if [[ -f "${PGPOOL_ADMIN_PASSWORD_FILE:-}" ]]; then
         cat <<"EOF"
@@ -472,6 +484,18 @@ pgpool_create_config() {
         info "Custom configuration '$PGPOOL_USER_CONF_FILE' detected!. Adding it to the configuration file."
         cat "$PGPOOL_USER_CONF_FILE" >>"$PGPOOL_CONF_FILE"
     fi
+    
+    # Watchdog
+    
+    pgpool_set_property "use_watchdog" "$PGPOOL_WD_USE_WATCHDOG"
+    pgpool_set_property "trusted_servers" "$PGPOOL_WD_TRUSTED_SERVERS"
+    pgpool_set_property "wd_hostname" "$PGPOOL_WD_HOSTNAME"
+    pgpool_set_property "wd_port" "$PGPOOL_WD_PORT"
+    pgpool_set_property "wd_priority" "$PGPOOL_WD_PRIORITY"
+    pgpool_set_property "delegate_IP" "$PGPOOL_WD_DELEGATE_IP"
+    pgpool_set_property "wd_interval" "$PGPOOL_WD_INTERVAL"
+    pgpool_set_property "wd_heartbeat_keepalive" "$PGPOOL_WD_HEARTBEAT_KEEPALIVE"
+    pgpool_set_property "wd_heartbeat_deadtime" "$PGPOOL_WD_HEARTBEAT_DEADTIME"
 }
 
 ########################
