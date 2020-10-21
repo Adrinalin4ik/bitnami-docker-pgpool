@@ -413,6 +413,7 @@ EOF
 #########################
 pgpool_create_config() {
     local -i node_counter=0
+    local -i wd_node_counter=0
     local load_balance_mode="off"
     local statement_level_load_balance="off"
     local pool_hba="off"
@@ -507,8 +508,8 @@ pgpool_create_config() {
     done
     
     # Backend settings
-    read -r -a nodes <<<"$(tr ',;' ' ' <<<"${PGPOOL_WD_NODES}")"
-    for node in "${nodes[@]}"; do
+    read -r -a wd_nodes <<<"$(tr ',;' ' ' <<<"${PGPOOL_WD_NODES}")"
+    for node in "${wd_nodes[@]}"; do
         pgpool_create_wd_config "$node"
     done
 
