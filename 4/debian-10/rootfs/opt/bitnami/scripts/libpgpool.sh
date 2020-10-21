@@ -360,7 +360,7 @@ pgpool_create_wd_config() {
     local -r host="${fields[1]:?field host is needed}"
     local -r port="${fields[2]:-9999}"
     local -r weight="${fields[3]:-1}"
-    local -r wd_port="${fields[3]:-9000}"
+    local -r wd_port="${fields[4]:-9000}"
     debug "Adding '$host' information to the configuration..."
     cat >>"$PGPOOL_CONF_FILE" <<EOF
 other_pgpool_hostname$num = '$host'
@@ -627,4 +627,6 @@ pgpool_initialize() {
     pgpool_create_config
     pgpool_generate_password_file
     pgpool_generate_admin_password_file
+    
+    cat /opt/bitnami/pgpool/conf/pgpool.conf
 }
