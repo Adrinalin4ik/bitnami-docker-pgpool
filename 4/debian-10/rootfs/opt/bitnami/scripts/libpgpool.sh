@@ -83,7 +83,7 @@ export PGPOOL_TLS_CA_FILE="${PGPOOL_TLS_CA_FILE:-}"
 export PGPOOL_TLS_PREFER_SERVER_CIPHERS="${PGPOOL_TLS_PREFER_SERVER_CIPHERS:-yes}"
 
 # Watchdog
-
+export PGPOOL_WD_NODES="${PGPOOL_WD_NODES:-}"
 export PGPOOL_WD_USE_WATCHDOG="${PGPOOL_WD_USE_WATCHDOG:-no}"
 export PGPOOL_WD_TRUSTED_SERVERS="${PGPOOL_WD_TRUSTED_SERVERS:-}"
 export PGPOOL_WD_HOSTNAME="${PGPOOL_WD_HOSTNAME:-}"
@@ -344,6 +344,32 @@ pgpool_set_property() {
 }
 
 ########################
+# Add a wd configuration to pgpool.conf file
+# Globals:
+#   PGPOOL_*
+# Arguments:
+#   None
+# Returns:
+#   None
+#########################
+pgpool_create_wd_config() {
+    local -r node=${1:?node is missing}
+    # default values
+    read -r -a fields <<<"$(tr ':' ' ' <<<"${node}")"
+    local -r num="${fields[0]:?field num is needed}"
+    local -r host="${fields[1]:?field host is needed}"
+    local -r port="${fields[2]:-9999}"
+    local -r weight="${fields[3]:-1}"
+    local -r wd_port="${fields[3]:-9000}"
+    debug "Adding '$host' information to the configuration..."
+    cat >>"$PGPOOL_CONF_FILE" <<EOF
+other_pgpool_hostname$num = '$host'
+other_pgpool_port$num = $port
+other_wd_port$num = $wd_port
+EOF
+}
+
+########################
 # Add a backend configuration to pgpool.conf file
 # Globals:
 #   PGPOOL_*
@@ -478,6 +504,12 @@ pgpool_create_config() {
     read -r -a nodes <<<"$(tr ',;' ' ' <<<"${PGPOOL_BACKEND_NODES}")"
     for node in "${nodes[@]}"; do
         pgpool_create_backend_config "$node"
+    done
+    
+    # Backend settings
+    read -r -a nodes <<<"$(tr ',;' ' ' <<<"${PGPOOL_WD_NODES}")"
+    for node in "${nodes[@]}"; do
+        pgpool_create_wd_config "$node"
     done
 
     if [[ -f "$PGPOOL_USER_CONF_FILE" ]]; then
