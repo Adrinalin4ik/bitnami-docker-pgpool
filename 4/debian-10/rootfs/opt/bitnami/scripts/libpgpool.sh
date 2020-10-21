@@ -487,15 +487,15 @@ pgpool_create_config() {
     
     # Watchdog
     
-    pgpool_set_property "use_watchdog" "$PGPOOL_WD_USE_WATCHDOG"
-    pgpool_set_property "trusted_servers" "$PGPOOL_WD_TRUSTED_SERVERS"
-    pgpool_set_property "wd_hostname" "$PGPOOL_WD_HOSTNAME"
-    pgpool_set_property "wd_port" "$PGPOOL_WD_PORT"
-    pgpool_set_property "wd_priority" "$PGPOOL_WD_PRIORITY"
-    pgpool_set_property "delegate_IP" "$PGPOOL_WD_DELEGATE_IP"
-    pgpool_set_property "wd_interval" "$PGPOOL_WD_INTERVAL"
-    pgpool_set_property "wd_heartbeat_keepalive" "$PGPOOL_WD_HEARTBEAT_KEEPALIVE"
-    pgpool_set_property "wd_heartbeat_deadtime" "$PGPOOL_WD_HEARTBEAT_DEADTIME"
+    pgpool_set_property "use_watchdog" $PGPOOL_WD_USE_WATCHDOG
+    pgpool_set_property "trusted_servers" $PGPOOL_WD_TRUSTED_SERVERS
+    pgpool_set_property "wd_hostname" $PGPOOL_WD_HOSTNAME
+    pgpool_set_property "wd_port" $PGPOOL_WD_PORT
+    pgpool_set_property "wd_priority" $PGPOOL_WD_PRIORITY
+    pgpool_set_property "delegate_IP" $PGPOOL_WD_DELEGATE_IP
+    pgpool_set_property "wd_interval" $PGPOOL_WD_INTERVAL
+    pgpool_set_property "wd_heartbeat_keepalive" $PGPOOL_WD_HEARTBEAT_KEEPALIVE
+    pgpool_set_property "wd_heartbeat_deadtime" $PGPOOL_WD_HEARTBEAT_DEADTIME
 }
 
 ########################
