@@ -366,6 +366,8 @@ pgpool_create_wd_config() {
 other_pgpool_hostname$num = '$host'
 other_pgpool_port$num = $port
 other_wd_port$num = $wd_port
+heartbeat_destination$num = '$host'
+heartbeat_destination_port$num = $port
 EOF
 }
 
