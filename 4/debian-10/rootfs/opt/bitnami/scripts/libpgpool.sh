@@ -625,8 +625,8 @@ pgpool_initialize() {
 
     pgpool_create_pghba
     pgpool_create_config
+    cat /opt/bitnami/pgpool/conf/pgpool.conf
     pgpool_generate_password_file
     pgpool_generate_admin_password_file
     
-    cat /opt/bitnami/pgpool/conf/pgpool.conf
 }
