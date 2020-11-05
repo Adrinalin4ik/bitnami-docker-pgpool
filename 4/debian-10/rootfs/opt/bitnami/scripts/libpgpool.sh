@@ -73,7 +73,7 @@ export PGPOOL_HEALTH_CHECK_MAX_RETRIES="${PGPOOL_HEALTH_CHECK_MAX_RETRIES:-5}"
 export PGPOOL_HEALTH_CHECK_RETRY_DELAY="${PGPOOL_HEALTH_CHECK_RETRY_DELAY:-5}"
 export PGPOOL_POSTGRES_CUSTOM_USERS="${PGPOOL_POSTGRES_CUSTOM_USERS:-}"
 export PGPOOL_POSTGRES_CUSTOM_PASSWORDS="${PGPOOL_POSTGRES_CUSTOM_PASSWORDS:-}"
-
+export PGPOOL_FAILOVER_ON_BACKEND_ERROR="${PGPOOL_FAILOVER_ON_BACKEND_ERROR:-off}"
 # SSL
 
 export PGPOOL_ENABLE_TLS="${PGPOOL_ENABLE_TLS:-no}"
@@ -486,7 +486,7 @@ pgpool_create_config() {
     pgpool_set_property "health_check_retry_delay" "$PGPOOL_HEALTH_CHECK_RETRY_DELAY"
     # Failover settings
     pgpool_set_property "failover_command" "echo \">>> Failover - that will initialize new primary node search!\""
-    pgpool_set_property "failover_on_backend_error" "off"
+    pgpool_set_property "failover_on_backend_error" "$PGPOOL_FAILOVER_ON_BACKEND_ERROR"
     # Keeps searching for a primary node forever when a failover occurs
     pgpool_set_property "search_primary_node_timeout" "0"
     pgpool_set_property "disable_load_balance_on_write" "$PGPOOL_DISABLE_LOAD_BALANCE_ON_WRITE"
